@@ -56,3 +56,21 @@ I don't trust myself to write actual code without an interperter, but here's a s
 (200, 0, 0, add #2, #0, #1) // stores 9+10 in #2
 (300, 0, 0, display #3)     // prints 19 to screen
 ```
+
+And here's hello world:
+```
+(0, 0, 72, displaychar #0)
+(1000, 0, 101, displaychar #1)
+(2000, 0, 108, displaychar #2)
+(3000, 0, 108, displaychar #3)
+(4000, 0, 111, displaychar #4)
+(5000, 0, 44, displaychar #5)
+(6000, 0, 32, displaychar #6)
+(7000, 0, 87, displaychar #7)
+(8000, 0, 111, displaychar #8)
+(9000, 0, 114, displaychar #9)
+(10000, 0, 108, displaychar #10)
+(20000, 0, 100, displaychar #11)
+(30000, 0, 33, displaychar #12)
+(40000, 0, 10, displaychar #13)
+```
