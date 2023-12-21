@@ -1,3 +1,5 @@
+mod node;
+
 use std::{
     env,
     fs,
@@ -9,7 +11,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     if args.len() < 2 {
         println!("No input filename supplied");
         return Ok(());
-    } 
+    }
 
     let source = fs::read_to_string(&args[1])?;
 
