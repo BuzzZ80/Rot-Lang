@@ -1,7 +1,7 @@
 # Rot Lang
 Rot is a language with a simple goal: to be as inherently slow as possible.\
 ... or at least, as slow as I can make it\
-To my knowledge, its execution is inherently dependent on an NP-hard problem with factorial time complexity, but it's possible that there are other possible optimizations that I don't know about. 
+To my knowledge, its execution is inherently dependent on an NP-hard problem with factorial time complexity, but it's possible that there are other optimizations that I don't know about. 
 
 ## Approach
 Looking for ways to make the objectively worst programming language, my mind immediately went to graph problems, as many of these have high time complexity. After first considering data dependency graphs and problems like graph coloring, but failing to find a good way to turn them into a programming language, I settled on something a little simpler: the shortest hamiltonian path problem. This is similar to the better known traveling salesman problem, except it doesn't require the path to start and end in the same place. I chose this approach because, like the traveling salesman problem, solutions to this problem generally take factorial time.
@@ -26,6 +26,7 @@ changing the Z component also changes the distances between nodes, which must be
 # Writing in Rot
 A node is written as follows:
 - `(x, y, z, expr)`
+
 x, y, and z represent the initial coordinates\
 expr is any expression as defined in [Expressions](#Expressions)\
 A node's index is the number of nodes that came before it. The first node is node 0, the next is node 1, etc...
@@ -54,7 +55,7 @@ I don't trust myself to write actual code without an interperter, but here's a s
 (0, 0, 9, nop)              // loads 9 into #0
 (100, 0, 10, nop)           // loads 10 into #1
 (200, 0, 0, add #2, #0, #1) // stores 9+10 in #2
-(300, 0, 0, display #3)     // prints 19 to screen
+(300, 0, 0, display #2)     // prints 19 to screen
 ```
 
 And here's hello world:
