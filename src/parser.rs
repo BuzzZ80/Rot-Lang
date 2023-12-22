@@ -53,7 +53,7 @@ parser! {
     param: Param {
         Null => Param::Null,
         IndexIndicator Number(n) => {
-            if n != n.floor() { panic!("Expected integer, but was given a float"); }
+            if n != n.floor() || n.is_sign_negative() { panic!("Expected positive integer, but was given a negative or float"); }
             Param::NodeIndex(n as usize)
         }
         Number(n) => Param::Literal(n)
