@@ -1,10 +1,7 @@
+mod lexer;
 mod node;
 
-use std::{
-    env,
-    fs,
-    error::Error,
-};
+use std::{env, error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -15,8 +12,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let source = fs::read_to_string(&args[1])?;
 
-    println!("{source}");
+    let tokens = lexer::Lexer::new(source.as_str())
+        .map(|(t, _)| t)
+        .collect::<Vec<lexer::Token>>();
+
+    println!("{tokens:#?}");
 
     Ok(())
 }
-
