@@ -9,8 +9,10 @@ pub fn execute(prg: Program) {
     let mut current: usize = 0;
 
     while nodes[current].expr != Expr::Exit {
-        execute_node(&mut nodes, current);
-        if let Some(next) = edges.get(edges.iter().position(|n| *n == current).unwrap()+1) {
+        if execute_node(&mut nodes, current) {
+            edges = shortest_hamiltonian_path(&nodes);
+        }
+        if let Some(next) = edges.get(edges.iter().position(|n| *n == current).unwrap() + 1) {
             current = *next;
         } else {
             break;
@@ -18,7 +20,8 @@ pub fn execute(prg: Program) {
     }
 }
 
-fn execute_node(nodes: &mut Vec<Node>, current: usize) {
+/// returns true if a recalculateion of the path is needed.
+fn execute_node(nodes: &mut Vec<Node>, current: usize) -> bool {
     match nodes[current].expr {
         Expr::Nop => {}
         Expr::Exit => {}
@@ -34,6 +37,8 @@ fn execute_node(nodes: &mut Vec<Node>, current: usize) {
         },
         n => todo!("cant execute `{n:?}` yet"),
     }
+
+    false
 }
 
 fn pathlength(nodes: &Vec<Node>, indexes: &Vec<usize>) -> f64 {
