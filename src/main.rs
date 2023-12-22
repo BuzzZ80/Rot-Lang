@@ -1,5 +1,5 @@
-mod node;
 mod lexer;
+mod node;
 mod parser;
 
 use std::{env, error::Error, fs};

@@ -1,6 +1,6 @@
-use crate::node::*;
 use crate::lexer::Token::*;
 use crate::lexer::*;
+use crate::node::*;
 use plex::parser;
 
 parser! {
