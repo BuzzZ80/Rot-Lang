@@ -11,7 +11,7 @@ pub struct Node {
     pub expr: Expr,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Expr {
     Nop,
     Exit,
@@ -26,7 +26,7 @@ pub enum Expr {
     Div(Param, Param, Param),
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Param {
     NodeIndex(usize),
     Literal(f64),

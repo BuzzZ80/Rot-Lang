@@ -1,6 +1,7 @@
 mod lexer;
 mod node;
 mod parser;
+mod runtime;
 
 use std::{env, error::Error, fs};
 
@@ -13,9 +14,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let source = fs::read_to_string(&args[1])?;
 
-    let graph = parser::parse(lexer::Lexer::new(&source));
-
-    println!("{graph:#?}");
+    runtime::execute(parser::parse(lexer::Lexer::new(&source)).unwrap());
 
     Ok(())
 }
