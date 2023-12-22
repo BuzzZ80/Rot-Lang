@@ -12,7 +12,7 @@ Rot is expressed as a list of nodes, each given:
 * x, y, and z coordinates
 * an expression or operation
 
-The program is executed from the first node, following the physically shortest path through all nodes which visits each node exactly once. I'm not yet sure how path order will be implemented.
+The program is executed from the first node, following the physically shortest path through all nodes which visits each node exactly once. The next instruction is the one that's farther away from the root node.
 
 Code is self-modifying. Self-modification is used for:
 * Control flow
