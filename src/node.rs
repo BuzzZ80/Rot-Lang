@@ -39,3 +39,13 @@ impl Node {
             .sqrt()
     }
 }
+
+impl Param {
+    pub fn getval(&self, nodes: &Vec<Node>) -> f64 {
+        match self {
+            Param::Literal(n) => *n,
+            Param::NodeIndex(i) => nodes[*i].z,
+            Param::Null => 0.,
+        }
+    }
+}

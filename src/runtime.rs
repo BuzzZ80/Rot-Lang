@@ -35,6 +35,35 @@ fn execute_node(nodes: &mut Vec<Node>, current: usize) -> bool {
             Param::NodeIndex(i) => print!("{}", nodes[i].z as u8 as char),
             Param::Null => {}
         },
+        // input and move not yet implemented
+        Expr::Add(p1, p2, p3) => {
+            if let Param::NodeIndex(i) = p1 {
+                nodes[i].z = p2.getval(&nodes) + p3.getval(&nodes)
+            } else {
+                panic!("can't write to non-node");
+            }
+        }
+        Expr::Sub(p1, p2, p3) => {
+            if let Param::NodeIndex(i) = p1 {
+                nodes[i].z = p2.getval(&nodes) - p3.getval(&nodes)
+            } else {
+                panic!("can't write to non-node");
+            }
+        }
+        Expr::Mul(p1, p2, p3) => {
+            if let Param::NodeIndex(i) = p1 {
+                nodes[i].z = p2.getval(&nodes) * p3.getval(&nodes)
+            } else {
+                panic!("can't write to non-node");
+            }
+        }
+        Expr::Div(p1, p2, p3) => {
+            if let Param::NodeIndex(i) = p1 {
+                nodes[i].z = p2.getval(&nodes) / p3.getval(&nodes)
+            } else {
+                panic!("can't write to non-node");
+            }
+        }
         n => todo!("cant execute `{n:?}` yet"),
     }
 

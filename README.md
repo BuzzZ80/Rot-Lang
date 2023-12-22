@@ -1,10 +1,10 @@
 # Rot Lang
 Rot is a language with a simple goal: to be as inherently slow as possible.\
 ... or at least, as slow as I can make it\
-To my knowledge, its execution is inherently dependent on an NP-hard problem with factorial time complexity, but it's possible that there are other optimizations that I don't know about. 
+To my knowledge, its execution is inherently dependent on an NP-hard problem with factorial time complexity, but it's possible that there are optimizations that I don't know about. 
 
 ## Approach
-Looking for ways to make the objectively worst programming language, my mind immediately went to graph problems, as many of these have high time complexity. After first considering data dependency graphs and problems like graph coloring, but failing to find a good way to turn them into a programming language, I settled on something a little simpler: the shortest hamiltonian path problem. This is similar to the better known traveling salesman problem, except it doesn't require the path to start and end in the same place. I chose this approach because, like the traveling salesman problem, solutions to this problem generally take factorial time.
+Looking for ways to make the slowest programming language, my mind immediately went to graph problems, as many of these have high time complexity. After first considering data dependency graphs and problems like graph coloring, but failing to find a good way to turn them into a programming language, I settled on something a little simpler: the shortest hamiltonian path problem. This is similar to the better known traveling salesman problem, except it doesn't require the path to start and end in the same place. I chose this approach because, like the traveling salesman problem, solutions to this problem generally take factorial time. There are dynamic programming solutions that take exponential time, but I reckon that even exponential time is slow enough for me.
 
 ## Concept
 Rot is expressed as a list of nodes, each given:
@@ -32,7 +32,7 @@ expr is any expression as defined in [Expressions](#Expressions)\
 A node's index is the number of nodes that came before it. The first node is node 0, the next is node 1, etc...
 
 # Expressions
-This list is incomplete, but expressions might include / look like:
+More instructions will be added in the future, and it should be noted that input and move are not implemented yet, but currently implemented or planned instructions are as follows:
 - `nop`
 - `exit`
 - `display src`
@@ -46,19 +46,19 @@ This list is incomplete, but expressions might include / look like:
 - `divide dest, src1, src2`
 
 destinations must be nodes. How the operation affects a node depends on which operation is being done.
-sources can be nodes, number literals, or just an `x` for optional inputs/outputs that are to be disregarded. `x` is used, for example, if you only want to modify some of the coordinates of a node using `move`.\
-Node literals will be expressed as an octothorpe (`#`) followed by an integer literal.
+Sources can be nodes, number literals, or just an `x` for optional inputs/outputs that are to be disregarded. `x` is used, for example, if you only want to modify some of the coordinates of a node using `move`.\
+Node literals are expressed as an octothorpe (`#`) followed by an integer literal.
 
 # Examples
-I don't trust myself to write actual code without an interperter, but here's a simple example that adds 9 + 10 and prints it (hopefully):
+Here's a simple example that adds 9 + 10 and prints the result:
 ```
 (0, 0, 9, nop)              // loads 9 into #0
 (100, 0, 10, nop)           // loads 10 into #1
-(200, 0, 0, add #2, #0, #1) // stores 9+10 in #2
-(300, 0, 0, display #2)     // prints 19 to screen
+(200, 0, 0, add #2 #0 #1)   // stores 9+10 in #2
+(300, 0, 0, display #2)     // prints result to screen
 ```
 
-And here's hello world:
+And here's hello world, which should take over an hour to run with my implementation (Depending on your hardware):
 ```
 (0, 0, 72, displaychar #0)
 (1000, 0, 101, displaychar #1)

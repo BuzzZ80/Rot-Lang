@@ -17,6 +17,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     runtime::execute(parser::parse(lexer::Lexer::new(&source)).unwrap());
 
-    println!("{:?}", timer.elapsed());
+    println!();
+    println!("{} seconds", timer.elapsed().as_secs_f64());
     Ok(())
 }
