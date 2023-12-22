@@ -39,11 +39,11 @@ More instructions will be added in the future, and it should be noted that input
 - `displaychar src`
 - `input dest`
 - `inputchar dest`
-- `move dest, srcx, srcy, srcz`
-- `add dest, src1, src2`
-- `subtract dest, src1, src2`
-- `multiply dest, src1, src2`
-- `divide dest, src1, src2`
+- `move dest srcx srcy srcz`
+- `add dest src1 src2`
+- `subtract dest src1 src2`
+- `multiply dest src1 src2`
+- `divide dest src1 src2`
 
 destinations must be nodes. How the operation affects a node depends on which operation is being done.
 Sources can be nodes, number literals, or just an `x` for optional inputs/outputs that are to be disregarded. `x` is used, for example, if you only want to modify some of the coordinates of a node using `move`.\
