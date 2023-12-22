@@ -1,5 +1,7 @@
 /* ο（´･ω･｀o）*/
 
+use std::io::Write;
+
 use crate::node::*;
 use itertools::{self, Itertools};
 
@@ -23,19 +25,51 @@ pub fn execute(prg: Program) {
 /// returns true if a recalculateion of the path is needed.
 fn execute_node(nodes: &mut Vec<Node>, current: usize) -> bool {
     match nodes[current].expr {
-        Expr::Nop => {}
-        Expr::Exit => {}
-        Expr::Display(p) => match p {
-            Param::Literal(n) => print!("{n}"),
-            Param::NodeIndex(i) => print!("{}", nodes[i].z),
-            Param::Null => {}
+        Expr::Nop => return false,
+        Expr::Exit => return false,
+        Expr::Display(p) => {
+            match p {
+                Param::Literal(n) => print!("{n}"),
+                Param::NodeIndex(i) => print!("{}", nodes[i].z),
+                Param::Null => {}
+            }
+            let _ = std::io::stdout().flush();
+            return false;
+        }
+        Expr::DisplayChar(p) => {
+            match p {
+                Param::Literal(n) => print!("{}", n as u8 as char),
+                Param::NodeIndex(i) => print!("{}", nodes[i].z as u8 as char),
+                Param::Null => {}
+            }
+            let _ = std::io::stdout().flush();
+            return false;
+        }
+        Expr::Input(p) => match p {
+            Param::NodeIndex(i) => {
+                let mut input = String::new();
+                std::io::stdin()
+                    .read_line(&mut input)
+                    .expect("failed to read line from user");
+                nodes[i].z = input
+                    .chars()
+                    .take_while(|c| c.is_numeric() || *c == '.' || *c == '-')
+                    .collect::<String>()
+                    .parse()
+                    .expect("Invalid number input");
+            }
+            _ => panic!("Expected node index, found {:?}", p),
         },
-        Expr::DisplayChar(p) => match p {
-            Param::Literal(n) => print!("{}", n as u8 as char),
-            Param::NodeIndex(i) => print!("{}", nodes[i].z as u8 as char),
-            Param::Null => {}
+        Expr::InputChar(p) => match p {
+            Param::NodeIndex(i) => {
+                let mut input = String::new();
+                std::io::stdin()
+                    .read_line(&mut input)
+                    .expect("failed to read line from user");
+                nodes[i].z = input.chars().next().expect("input was empty") as u8 as f64;
+            }
+            _ => panic!("Expected node index, found {:?}", p),
         },
-        // input and move not yet implemented
         Expr::Add(p1, p2, p3) => {
             if let Param::NodeIndex(i) = p1 {
                 nodes[i].z = p2.getval(&nodes) + p3.getval(&nodes)
@@ -64,10 +98,25 @@ fn execute_node(nodes: &mut Vec<Node>, current: usize) -> bool {
                 panic!("can't write to non-node");
             }
         }
+        Expr::Move(p1, p2, p3, p4) => {
+            if let Param::NodeIndex(i) = p1 {
+                if p2 != Param::Null {
+                    nodes[i].x = p2.getval(nodes);
+                }
+                if p3 != Param::Null {
+                    nodes[i].y = p3.getval(nodes);
+                }
+                if p4 != Param::Null {
+                    nodes[i].z = p4.getval(nodes);
+                }
+                return true;
+            } else {
+                panic!("can't write to non-node");
+            }
+        }
         n => todo!("cant execute `{n:?}` yet"),
     }
-
-    false
+    true
 }
 
 fn pathlength(nodes: &Vec<Node>, indexes: &Vec<usize>) -> f64 {
