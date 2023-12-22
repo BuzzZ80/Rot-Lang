@@ -31,7 +31,7 @@ x, y, and z represent the initial coordinates\
 expr is any expression as defined in [Expressions](#Expressions)\
 A node's index is the number of nodes that came before it. The first node is node 0, the next is node 1, etc...
 
-# Expressions
+## Expressions
 More instructions will be added in the future, and it should be noted that input and move are not implemented yet, but currently implemented or planned instructions are as follows:
 - `nop`
 - `exit`
