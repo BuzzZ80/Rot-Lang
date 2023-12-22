@@ -5,11 +5,16 @@ use itertools::{self, Itertools};
 
 pub fn execute(prg: Program) {
     let mut nodes = prg.stmts;
+    let mut edges = shortest_hamiltonian_path(&nodes);
     let mut current: usize = 0;
 
-    while current < nodes.len() && nodes[current].expr != Expr::Exit {
+    while nodes[current].expr != Expr::Exit {
         execute_node(&mut nodes, current);
-        current += 1;
+        if let Some(next) = edges.get(edges.iter().position(|n| *n == current).unwrap()+1) {
+            current = *next;
+        } else {
+            break;
+        }
     }
 }
 

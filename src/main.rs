@@ -15,14 +15,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let source = fs::read_to_string(&args[1])?;
 
-    //runtime::execute(parser::parse(lexer::Lexer::new(&source)).unwrap());
-    println!(
-        "{:?}",
-        runtime::shortest_hamiltonian_path(
-            &parser::parse(lexer::Lexer::new(&source)).unwrap().stmts
-        )
-    );
-    println!("{:?}", timer.elapsed());
+    runtime::execute(parser::parse(lexer::Lexer::new(&source)).unwrap());
 
+    println!("{:?}", timer.elapsed());
     Ok(())
 }
