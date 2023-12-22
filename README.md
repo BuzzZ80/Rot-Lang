@@ -32,7 +32,7 @@ expr is any expression as defined in [Expressions](#Expressions)\
 A node's index is the number of nodes that came before it. The first node is node 0, the next is node 1, etc...
 
 ## Expressions
-More instructions will be added in the future, and it should be noted that input and move are not implemented yet, but currently implemented or planned instructions are as follows:
+More instructions will likely be added in the future, but for now:
 - `nop`
 - `exit`
 - `display src`
@@ -45,17 +45,29 @@ More instructions will be added in the future, and it should be noted that input
 - `multiply dest src1 src2`
 - `divide dest src1 src2`
 
-destinations must be nodes. How the operation affects a node depends on which operation is being done.
+destinations must be nodes. How the operation affects a node depends on which operation is being done, but generally, operations read/write to the z coordinate.
 Sources can be nodes, number literals, or just an `x` for optional inputs/outputs that are to be disregarded. `x` is used, for example, if you only want to modify some of the coordinates of a node using `move`.\
 Node literals are expressed as an octothorpe (`#`) followed by an integer literal.
 
 # Examples
-Here's a simple example that adds 9 + 10 and prints the result:
+Here's the classic esolang truth machine example, which doesn't have a terrible runtime due to it being relatively short:
 ```
-(0, 0, 9, nop)              // loads 9 into #0
-(100, 0, 10, nop)           // loads 10 into #1
-(200, 0, 0, add #2 #0 #1)   // stores 9+10 in #2
-(300, 0, 0, display #2)     // prints result to screen
+(0, 0, 0, displaychar 63)       // prints `?` prompt
+(100, 0, 0, input #1)           // takes number, 0 or 1, from user
+(200, 0, 0, subtract #1 #1 0.5) // transforms `0 or 1` to `-0.5 or 0.5`
+(300, 0, 0, multiply #3 #1 100) // #3 will now be at 50 or -50 z
+
+// branch for input = 0
+(400, 0, -100, displaychar 48)
+(600, 0, -100, nop)
+
+// branch for input = 1
+(400, 0, 100, move #8 600 0 100)    // set up loop
+(500, 0, 100, displaychar 49)       // print 1
+(600, 0, 100, move #8 390 0 90)     // #8 moves itself to loop
+
+// termination point
+(700, 0, 0, exit)
 ```
 
 And here's hello world, which should take over an hour to run with my implementation (Depending on your hardware):
