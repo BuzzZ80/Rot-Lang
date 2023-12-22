@@ -1,4 +1,9 @@
-#[derive(Clone, Copy)]
+#[derive(Debug)]
+pub struct Program {
+    pub stmts: Vec<Node>,
+}
+
+#[derive(Debug, Clone, Copy)]
 pub struct Node {
     pub x: f64,
     pub y: f64,
@@ -6,12 +11,22 @@ pub struct Node {
     pub expr: Expr,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub enum Expr {
     Nop,
+    Exit,
+    Display(Param),
+    DisplayChar(Param),
+    Input(Param),
+    InputChar(Param),
+    Move(Param, Param, Param, Param),
+    Add(Param, Param, Param),
+    Sub(Param, Param, Param),
+    Mul(Param, Param, Param),
+    Div(Param, Param, Param),
 }
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub enum Param {
     NodeIndex(usize),
     Literal(f64),

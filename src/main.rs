@@ -1,5 +1,6 @@
-mod lexer;
 mod node;
+mod lexer;
+mod parser;
 
 use std::{env, error::Error, fs};
 
@@ -12,11 +13,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let source = fs::read_to_string(&args[1])?;
 
-    let tokens = lexer::Lexer::new(source.as_str())
-        .map(|(t, _)| t)
-        .collect::<Vec<lexer::Token>>();
+    let graph = parser::parse(lexer::Lexer::new(&source));
 
-    println!("{tokens:#?}");
+    println!("{graph:#?}");
 
     Ok(())
 }

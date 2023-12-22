@@ -41,7 +41,7 @@ This list is incomplete, but expressions might include / look like:
 - `inputchar dest`
 - `move dest, srcx, srcy, srcz`
 - `add dest, src1, src2`
-- `sub dest, src1, src2`
+- `subtract dest, src1, src2`
 - `multiply dest, src1, src2`
 - `divide dest, src1, src2`
 
