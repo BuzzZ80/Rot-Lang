@@ -35,7 +35,7 @@ lexer! {
     r#","# => Token::Comma,
     r#"#"# => Token::IndexIndicator,
     r#"x"# => Token::Null,
-    r#"([0-9]*[.])?[0-9]+"# => {
+    r#"([-]?[0-9]*[.])?[0-9]+"# => {
         if let Ok(i) = text.parse() {
             Token::Number(i)
         } else {
